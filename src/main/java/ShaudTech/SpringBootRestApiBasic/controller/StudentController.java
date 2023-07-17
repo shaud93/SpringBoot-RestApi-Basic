@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
     @GetMapping("student")
     public Student getStudent()
@@ -17,7 +18,7 @@ public class StudentController {
     }
 
     // Get List Example
-    @GetMapping("students")
+    @GetMapping
     public List<Student> getStudents(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1,"Dante", "Watson"));
@@ -28,7 +29,7 @@ public class StudentController {
         return students;
     }
     // Path Variable Example
-    @GetMapping("students/{id}/{f-name}/{l-name}")
+    @GetMapping("{id}/{f-name}/{l-name}")
     public Student studentPathVariable(@PathVariable("id") int studentId,
                                        @PathVariable("f-name") String firstName,
                                        @PathVariable("l-name") String lastName){
@@ -36,14 +37,14 @@ public class StudentController {
     }
     // Query/Request param Example
     // http://localhost:8080/students/query?id=1&firstName=dante&lastName=watson
-    @GetMapping("students/query")
+    @GetMapping("query")
     public Student studentRequestVariable(@RequestParam int id,
                                           @RequestParam String firstName,
                                           @RequestParam String lastName) {
         return new Student(id, firstName, lastName);
     }
     // PostMapping And RequestMapping
-    @PostMapping("students/create")
+    @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     public Student createStudent(@RequestBody Student student)
     {
@@ -53,7 +54,7 @@ public class StudentController {
         return student;
     }
     //PutMapping
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public Student updateStudent (@RequestBody Student student, @PathVariable("id")int studentId)
     {
         System.out.println(student.getFirstName());
@@ -61,7 +62,7 @@ public class StudentController {
         return student;
     }
     //DeleteMapping
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public String deleteStudent(@PathVariable("id") int studentId)
     {
         return "deleted";
